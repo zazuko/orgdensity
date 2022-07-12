@@ -9,3 +9,5 @@ To setup the project locally after you have cloned this repository:
 
 The app will be available on `localhost:8050`
 
+## Run tests
+`python -m pytest`
