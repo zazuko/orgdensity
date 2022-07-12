@@ -42,7 +42,6 @@ m.save("/home/magdalena/zazuko/notebooks/notebooks/swisstopo/assets/basemap.html
 app.layout = dbc.Container(
     [
         html.Div(
-            # className="banner",
             children=[
                 html.Div(
                     className="position-absolute top-0 start-50 translate-middle-x p-3",
