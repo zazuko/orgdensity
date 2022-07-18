@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      -  name: Install pytest
+      - name: Install pytest
         run: pip install "pytest>=6.2.4"
 
       - name: Run tests
