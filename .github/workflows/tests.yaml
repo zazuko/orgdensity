@@ -32,14 +32,17 @@ jobs:
       - name: Install poetry
         run: pip install poetry
 
-      - name: Setup venv
-        run: python -m venv venv
+      # - name: Setup venv
+      #   run: python -m venv venv
 
-      - name: Activate venv
-        run: . venv/bin/activate
+      # - name: Activate venv
+      #   run: . venv/bin/activate
 
       - name: Install dependencies
         run: poetry install
+
+      - name: pip freeze
+        run: pip freeze
 
       - name: Install pytest
         run: pip install "pytest>=6.2.4"
