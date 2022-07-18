@@ -40,4 +40,4 @@ jobs:
         run: pip install "pytest>=6.2.4"
 
       - name: Run tests
-        run: pytest --disable-warnings
+        run: python -m pytest --disable-warnings
