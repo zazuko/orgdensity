@@ -41,14 +41,11 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: configure venv
-        run: poetry shell
-
       - name: pip freeze
         run: pip freeze
 
-      - name: Install pytest
-        run: pip install "pytest>=6.2.4"
+      # - name: Install pytest
+      #   run: pip install "pytest>=6.2.4"
 
       - name: Run tests
-        run: python -m pytest --disable-warnings
+        run: poetry run python -m pytest --disable-warnings
