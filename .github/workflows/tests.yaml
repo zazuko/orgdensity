@@ -29,6 +29,10 @@ jobs:
       - name: Install poetry
         run: pip install poetry
 
+      - name: Setup venv
+        run: python -m venv venv
+        run: . venv/bin/activate
+
       - name: Install dependencies
         run: poetry install
 

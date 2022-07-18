@@ -1,10 +1,7 @@
 .vscode
 .pytest_cache
-.github/
 .ipynb_checkpoints
 venv
 
 *.html
 __pycache__/
-
-!.github/workflows/ci.yaml
