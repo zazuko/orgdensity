@@ -31,6 +31,8 @@ jobs:
 
       - name: Setup venv
         run: python -m venv venv
+
+      - name: Activate venv
         run: . venv/bin/activate
 
       - name: Install dependencies
