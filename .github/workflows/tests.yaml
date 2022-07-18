@@ -41,6 +41,9 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: configure venv
+        run: poetry shell
+
       - name: pip freeze
         run: pip freeze
 
