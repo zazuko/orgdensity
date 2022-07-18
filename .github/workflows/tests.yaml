@@ -32,5 +32,8 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+    -  name: Install pytest
+       run: pip install "pytest>=6.2.4"
+
       - name: Run tests
-        run: python -m pytest --disable-warnings
+        run: pytest --disable-warnings
