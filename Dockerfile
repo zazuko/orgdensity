@@ -10,9 +10,9 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry install
 
 # get source code
-COPY georegister georegister
-
-WORKDIR /app/georegister
+COPY assets /home/magdalena/zazuko/notebooks/notebooks/swisstopo/assets
+COPY georegister /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
+WORKDIR /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
 
 EXPOSE 8080
 
