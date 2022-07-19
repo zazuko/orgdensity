@@ -12,6 +12,8 @@ RUN poetry install
 # get source code
 COPY georegister georegister
 
+WORKDIR /app/georegister
+
 EXPOSE 8080
 
 # run as "nobody"
@@ -22,4 +24,4 @@ CMD ["python", \
   "--bind=[::]:8080", \
   "--timeout=300", \
   "--access-logfile=-", \
-  "georegister.main:server"]
+  "main:server"]
