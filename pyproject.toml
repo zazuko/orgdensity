@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "georegister"
+name = "orgdensity"
 version = "0.1.0"
 description = "Where are most companies registered?"
 authors = ["Magdalena Surówka"]

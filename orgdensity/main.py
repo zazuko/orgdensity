@@ -9,7 +9,7 @@ from client import LindasClient
 from utils import plot_streets_heatmap, plot_switzerland
 
 client = LindasClient("https://ld.admin.ch/query")
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 def get_options():
     data = client.get_communes()
@@ -37,7 +37,7 @@ controls = html.Div(
 )
 
 m = plot_switzerland()
-m.save("/home/magdalena/zazuko/notebooks/notebooks/swisstopo/assets/basemap.html")
+m.save("assets/basemap.html")
 
 app.layout = dbc.Container(
     [
@@ -135,15 +135,12 @@ app.layout = dbc.Container(
 def update_map(muni_id: int) -> Optional[str]:
     if muni_id:
         file = "assets/{}.html".format(muni_id)
-        file_full_path = (
-            "/home/magdalena/zazuko/notebooks/notebooks/swisstopo/{}".format(file)
-        )
-        if not os.path.isfile(file_full_path):
+        if not os.path.isfile("{}/{}".format(BASE_DIR, file)):
             centroid = client.get_commune_centroid(muni_id)
             df = client.get_commune_streets(muni_id)
             map_html = plot_streets_heatmap(centroid, df)
             map_html.save(
-                "/home/magdalena/zazuko/notebooks/notebooks/swisstopo/{}".format(file)
+                "{}/{}".format(BASE_DIR, file)
             )
 
         return file

@@ -11,8 +11,8 @@ RUN poetry install
 
 # get source code
 COPY assets /home/magdalena/zazuko/notebooks/notebooks/swisstopo/assets
-COPY georegister /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
-WORKDIR /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
+COPY orgdensity /home/magdalena/zazuko/notebooks/notebooks/swisstopo/orgdensity
+WORKDIR /home/magdalena/zazuko/notebooks/notebooks/swisstopo/orgdensity
 
 RUN mkdir -p /mpl
 ENV MPLCONFIGDIR /mpl

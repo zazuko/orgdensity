@@ -61,6 +61,7 @@ class LindasClient(SparqlClient):
         """.format(
             muni_id, muni_id
         )
+        print(query)
 
         df = self.send_query(query)
         df = df.set_crs(epsg=4326)
