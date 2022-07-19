@@ -10,14 +10,14 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry install
 
 # get source code
-COPY assets /home/magdalena/zazuko/notebooks/notebooks/swisstopo/assets
-COPY georegister /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
-WORKDIR /home/magdalena/zazuko/notebooks/notebooks/swisstopo/georegister
+COPY assets /app/orgdensity/assets
+COPY orgdensity /app/orgdensity
+WORKDIR /app/orgdensity
 
 RUN mkdir -p /mpl
 ENV MPLCONFIGDIR /mpl
 
-RUN chown 65534:65534 -R /home/magdalena/zazuko/notebooks/notebooks/swisstopo /mpl
+RUN chown 65534:65534 -R /app /mpl
 
 # run as "nobody"
 USER 65534:65534
