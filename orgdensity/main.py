@@ -9,7 +9,7 @@ from client import LindasClient
 from utils import plot_streets_heatmap, plot_switzerland
 
 client = LindasClient("https://ld.admin.ch/query")
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def get_options():
     data = client.get_communes()
@@ -46,8 +46,8 @@ app.layout = dbc.Container(
                 html.Div(
                     className="position-absolute top-0 start-50 translate-middle-x p-3",
                     children=[
-                        html.H2(
-                            "Where are most companies registered?",
+                        html.H3(
+                            "Which streets have most companies registered?",
                             id="title",
                             style={"text-align": "center", "color": "#dddddd"},
                         ),
@@ -60,7 +60,7 @@ app.layout = dbc.Container(
                 #             id="banner-title",
                 #             children=[
                 #                 html.H2(
-                #                     "Where are most companies registered?",
+                #                     "Which streets have most companies registered?",
                 #                     id="title",
                 #                     style={"text-align": "center"},
                 #                 )
@@ -103,7 +103,7 @@ app.layout = dbc.Container(
                             id="loading",
                             children=[
                                 html.Iframe(
-                                    src="assets/basemap.html",
+                                    src="orgdensity/assets/basemap.html",
                                     id="div-map",
                                     style={
                                         "width": "100%",
