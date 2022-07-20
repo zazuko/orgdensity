@@ -1,5 +1,5 @@
-from georegister.client import LindasClient
 from graphly.api_client import SparqlClient
+from orgdensity.client import LindasClient
 
 
 class Test_queries:
