@@ -4,7 +4,6 @@ WORKDIR /app
 
 # install dependencies
 RUN apt-get update && apt-get install -y git
-# libgdal-dev g++
 RUN pip install poetry==1.1
 RUN poetry config virtualenvs.create false
 COPY pyproject.toml poetry.lock ./
