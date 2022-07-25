@@ -56,7 +56,7 @@ class LindasClient(SparqlClient):
             }}
         }}
         }}
-        GROUP BY ?thoroughfare ?geom ?x
+        GROUP BY ?thoroughfare ?geom
         ORDER BY DESC (?companies)
         """.format(
             muni_id, muni_id
