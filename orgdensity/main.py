@@ -2,17 +2,19 @@ import os
 from typing import Optional
 
 import dash_bootstrap_components as dbc
+import pandas as pd
 from dash import Dash, Input, Output, dcc, html
 from dash.dependencies import Input, Output
 
-from client import LindasClient
+from client import LindasClient, SwisstopoClient
 from utils import plot_streets_heatmap, plot_switzerland
 
-client = LindasClient("https://ld.admin.ch/query")
+lindas_client = LindasClient("https://ld.admin.ch/query")
+swisstopo_client = SwisstopoClient("https://geo.ld.admin.ch/query")
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def get_options():
-    data = client.get_communes()
+    data = lindas_client.get_communes()
     options = [
         {"label": i, "value": j}
         for i, j in zip(data.municipality, data.municipality_id)
@@ -136,8 +138,10 @@ def update_map(muni_id: int) -> Optional[str]:
     if muni_id:
         file = "assets/{}.html".format(muni_id)
         if not os.path.isfile("{}/{}".format(BASE_DIR, file)):
-            centroid = client.get_commune_centroid(muni_id)
-            df = client.get_commune_streets(muni_id)
+            centroid = lindas_client.get_commune_centroid(muni_id)
+            orgs = lindas_client.get_orgs_in_commune(muni_id)
+            streets = swisstopo_client.get_commune_streets(muni_id)
+            df = pd.merge(streets, orgs, how="left", on=["thoroughfare"]).fillna(0)
             map_html = plot_streets_heatmap(centroid, df)
             map_html.save(
                 "{}/{}".format(BASE_DIR, file)

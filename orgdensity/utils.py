@@ -27,12 +27,12 @@ def plot_streets_heatmap(centroid: list, df: pd.DataFrame) -> folium.Map:
             bucket = None
         return {
             "fillOpacity": 0.6,
-            "weight": 3,  # int(bucket + 1),
+            "weight": 2 if bucket is None else 3,
             "opacity": 1,
-            "fillColor": "303030"
+            "fillColor": "#4d4c4c"
             if bucket is None
             else mcolors.rgb2hex(cmap((bucket + 1) / N)),
-            "color": "303030"
+            "color": "#4d4c4c"
             if bucket is None
             else mcolors.rgb2hex(cmap((bucket + 1) / N)),
         }
@@ -47,6 +47,8 @@ def plot_streets_heatmap(centroid: list, df: pd.DataFrame) -> folium.Map:
     df, labels = classify(df)
     m = folium.Map(location=centroid, zoom_start=13, tiles="CartoDBdark_matter")
     for bucket, label in enumerate(labels):
+        if not bucket:
+            label = "0"
         feature_group = folium.FeatureGroup(name=label).add_to(m)
         folium.features.GeoJson(
             df[df.bucket == bucket],
