@@ -33,33 +33,46 @@ class LindasClient(SparqlClient):
         df = self.send_query(query)
         return df
 
-    def get_commune_streets(self, muni_id: int):
+    def get_orgs_in_commune(self, muni_id: int):
         query = """
         PREFIX schema: <http://schema.org/>
         PREFIX admin: <https://schema.ld.admin.ch/>
         PREFIX locn: <http://www.w3.org/ns/locn#>
 
-        SELECT ?thoroughfare (COUNT(?sub) AS ?companies) ?geom
+        SELECT ?thoroughfare (COUNT(?sub) AS ?companies)
         FROM <https://lindas.admin.ch/foj/zefix>
         WHERE {{
                 ?sub a admin:ZefixOrganisation ;
                 schema:address/locn:thoroughfare ?thoroughfare;
                 admin:municipality <https://ld.admin.ch/municipality/{}>.
 
-        SERVICE <https://geo.ld.admin.ch/query> {{
+        }}
+        GROUP BY ?thoroughfare
+        """.format(
+            muni_id
+        )
 
-            GRAPH <urn:bgdi:location:streets> {{
+        df = self.send_query(query)
+
+        return df
+
+class SwisstopoClient(SparqlClient):
+
+    def get_commune_streets(self, muni_id: int):
+        query = """
+        PREFIX schema: <http://schema.org/>
+        PREFIX admin: <https://schema.ld.admin.ch/>
+        PREFIX locn: <http://www.w3.org/ns/locn#>
+
+        SELECT ?thoroughfare ?geom
+        FROM <urn:bgdi:location:streets> {{
                 ?street_id a <http://www.opengis.net/ont/geosparql#Feature>;
                 schema:name ?thoroughfare;
                 schema:containedInPlace <https://geo.ld.admin.ch/boundaries/municipality/{}>;
                 <http://www.opengis.net/ont/geosparql#hasGeometry>/<http://www.opengis.net/ont/geosparql#asWKT> ?geom.
-            }}
         }}
-        }}
-        GROUP BY ?thoroughfare ?geom
-        ORDER BY DESC (?companies)
         """.format(
-            muni_id, muni_id
+            muni_id
         )
 
         df = self.send_query(query)
