@@ -36,4 +36,4 @@ jobs:
         run: poetry install
 
       - name: Run tests
-        run: poetry run python -m pytest --disable-warnings
+        run: poetry run python -m pytest tests/test_queries.py --disable-warnings

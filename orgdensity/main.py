@@ -141,8 +141,7 @@ def update_map(muni_id: int) -> Optional[str]:
             centroid = lindas_client.get_commune_centroid(muni_id)
             orgs = lindas_client.get_orgs_in_commune(muni_id)
             streets = swisstopo_client.get_commune_streets(muni_id)
-            df = pd.merge(streets, orgs, how="left", on="thoroughfare").fillna(0)
-            print(df.head())
+            df = pd.merge(streets, orgs, how="left", on=["thoroughfare"]).fillna(0)
             map_html = plot_streets_heatmap(centroid, df)
             map_html.save(
                 "{}/{}".format(BASE_DIR, file)
