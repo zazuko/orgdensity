@@ -6,10 +6,14 @@ import pandas as pd
 
 
 def classify(df, N=6):
-    classifier = mapclassify.NaturalBreaks(y=df.companies, k=N)
+    classifier = mapclassify.NaturalBreaks(y=df.companies[df.companies != 0], k=N)
     df["bucket"] = df[["companies"]].apply(classifier)
+    df["bucket"][df["bucket"] != 0] = df["bucket"] + 1
+    df["bucket"][(df["bucket"] == 0) & (df["companies"] != 0)] = 1
+
     labels = mapclassify.classifiers._get_mpl_labels(classifier, fmt="{:.0f}")
     labels[0] = labels[0].replace("0,", "1,")
+    labels = ["0"] + labels
 
     return df, labels
 
@@ -23,17 +27,15 @@ def plot_switzerland() -> folium.Map:
 def plot_streets_heatmap(centroid: list, df: pd.DataFrame) -> folium.Map:
     def style_function(feature, N=6, cmap=plt.get_cmap("inferno")):
         bucket = df["bucket"].get(int(feature["id"][-5:]), None)
-        if bucket == 0 and df["companies"].get(int(feature["id"][-5:]), None) == 0:
-            bucket = None
         return {
             "fillOpacity": 0.6,
-            "weight": 2 if bucket is None else 3,
+            "weight": 2 if bucket == 0 else 3,
             "opacity": 1,
             "fillColor": "#4d4c4c"
-            if bucket is None
+            if bucket == 0
             else mcolors.rgb2hex(cmap((bucket + 1) / N)),
             "color": "#4d4c4c"
-            if bucket is None
+            if bucket == 0
             else mcolors.rgb2hex(cmap((bucket + 1) / N)),
         }
 
@@ -47,8 +49,6 @@ def plot_streets_heatmap(centroid: list, df: pd.DataFrame) -> folium.Map:
     df, labels = classify(df)
     m = folium.Map(location=centroid, zoom_start=13, tiles="CartoDBdark_matter")
     for bucket, label in enumerate(labels):
-        if not bucket:
-            label = "0"
         feature_group = folium.FeatureGroup(name=label).add_to(m)
         folium.features.GeoJson(
             df[df.bucket == bucket],
