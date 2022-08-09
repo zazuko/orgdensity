@@ -36,5 +36,4 @@ class Test_queries:
         """
 
         output = self.lindas_client.send_query(query, timeout=601)
-        assert type(output) == pd.DataFrame
         assert output.shape[0] > 0
