@@ -2,7 +2,7 @@ name: Test SERVICE queries
 
 on:
   schedule:
-    - cron: '42 9 * * *'
+    - cron: '42 * * * *'
 
 jobs:
   docker:
